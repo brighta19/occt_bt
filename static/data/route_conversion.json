@@ -1,0 +1,100 @@
+[
+  {
+    "external_route_id": 1,
+    "internal": {
+      "route_id": 0,
+      "direction": "outbound"
+    }
+  },
+  {
+    "external_route_id": 2,
+    "internal": {
+      "route_id": 0,
+      "direction": "inbound"
+    }
+  },
+  {
+    "external_route_id": 3,
+    "internal": {
+      "route_id": 1,
+      "direction": "outbound"
+    }
+  },
+  {
+    "external_route_id": 4,
+    "internal": {
+      "route_id": 1,
+      "direction": "inbound"
+    }
+  },
+  {
+    "external_route_id": 5,
+    "internal": {
+      "route_id": 6,
+      "direction": "inbound"
+    }
+  },
+  {
+    "external_route_id": 6,
+    "internal": {
+      "route_id": 4,
+      "direction": "inbound"
+    }
+  },
+  {
+    "external_route_id": 7,
+    "internal": {
+      "route_id": 5,
+      "direction": "inbound"
+    }
+  },
+  {
+    "external_route_id": 8,
+    "internal": {
+      "route_id": 9,
+      "direction": "inbound"
+    }
+  },
+  {
+    "external_route_id": 9,
+    "internal": {
+      "route_id": 7,
+      "direction": "inbound"
+    }
+  },
+  {
+    "external_route_id": 10,
+    "internal": {
+      "route_id": 8,
+      "direction": "inbound"
+    }
+  },
+  {
+    "external_route_id": 12,
+    "internal": {
+      "route_id": 3,
+      "direction": "outbound"
+    }
+  },
+  {
+    "external_route_id": 14,
+    "internal": {
+      "route_id": 3,
+      "direction": "inbound"
+    }
+  },
+  {
+    "external_route_id": 15,
+    "internal": {
+      "route_id": 2,
+      "direction": "outbound"
+    }
+  },
+  {
+    "external_route_id": 16,
+    "internal": {
+      "route_id": 2,
+      "direction": "inbound"
+    }
+  }
+]

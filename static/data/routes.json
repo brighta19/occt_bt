@@ -1,0 +1,286 @@
+[
+  {
+    "id": 0,
+    "name": "Westside",
+    "abbreviation": "WS",
+    "color": "#e39798",
+    "direction": {
+      "inbound": {
+        "schedules": [
+          {
+            "schedule_id": 4,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday"]
+          },
+          { "schedule_id": 5, "label": "weekday", "days": ["friday"] },
+          { "schedule_id": 6, "label": "weekend", "days": ["saturday"] },
+          { "schedule_id": 7, "label": "weekend", "days": ["sunday"] }
+        ]
+      },
+      "outbound": {
+        "schedules": [
+          {
+            "schedule_id": 0,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday"]
+          },
+          { "schedule_id": 1, "label": "weekday", "days": ["friday"] },
+          { "schedule_id": 2, "label": "weekend", "days": ["saturday"] },
+          { "schedule_id": 3, "label": "weekend", "days": ["sunday"] }
+        ]
+      }
+    }
+  },
+  {
+    "id": 1,
+    "name": "Downtown Center-Leroy",
+    "abbreviation": "DCL",
+    "color": "#e12729",
+    "direction": {
+      "inbound": {
+        "schedules": [
+          {
+            "schedule_id": 12,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday"]
+          },
+          { "schedule_id": 13, "label": "weekday", "days": ["friday"] },
+          { "schedule_id": 14, "label": "weekend", "days": ["saturday"] },
+          { "schedule_id": 15, "label": "weekend", "days": ["sunday"] }
+        ]
+      },
+      "outbound": {
+        "schedules": [
+          {
+            "schedule_id": 8,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday"]
+          },
+          { "schedule_id": 9, "label": "weekday", "days": ["friday"] },
+          { "schedule_id": 10, "label": "weekend", "days": ["saturday"] },
+          { "schedule_id": 11, "label": "weekend", "days": ["sunday"] }
+        ]
+      }
+    }
+  },
+  {
+    "id": 2,
+    "name": "Main Street",
+    "abbreviation": "MS",
+    "color": "#f37324",
+    "direction": {
+      "inbound": {
+        "schedules": [
+          {
+            "schedule_id": 17,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday", "friday"]
+          }
+        ]
+      },
+      "outbound": {
+        "schedules": [
+          {
+            "schedule_id": 16,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday", "friday"]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 3,
+    "name": "University Downtown Center",
+    "abbreviation": "UDC",
+    "color": "#f8cc1b",
+    "direction": {
+      "inbound": {
+        "schedules": [
+          {
+            "schedule_id": 19,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday", "friday"]
+          }
+        ]
+      },
+      "outbound": {
+        "schedules": [
+          {
+            "schedule_id": 18,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday", "friday"]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 4,
+    "name": "Leroy Southside",
+    "abbreviation": "LRS",
+    "color": "#72b043",
+    "direction": {
+      "inbound": {
+        "schedules": [
+          {
+            "schedule_id": 20,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday"]
+          },
+          {
+            "schedule_id": 21,
+            "label": "weekday",
+            "days": ["friday"]
+          },
+          {
+            "schedule_id": 22,
+            "label": "weekend",
+            "days": ["saturday", "sunday"]
+          }
+        ]
+      },
+      "outbound": null
+    }
+  },
+  {
+    "id": 5,
+    "name": "ITC-UClub Shuttle",
+    "abbreviation": "IU",
+    "color": "#007f4e",
+    "direction": {
+      "inbound": {
+        "schedules": [
+          {
+            "schedule_id": 23,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday", "friday"]
+          }
+        ]
+      },
+      "outbound": null
+    }
+  },
+  {
+    "id": 6,
+    "name": "UClub Shuttle",
+    "abbreviation": "UC",
+    "color": "#166d78",
+    "direction": {
+      "inbound": {
+        "schedules": [
+          {
+            "schedule_id": 24,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday"]
+          },
+          {
+            "schedule_id": 25,
+            "label": "weekday",
+            "days": ["friday"]
+          },
+          {
+            "schedule_id": 26,
+            "label": "weekend",
+            "days": ["saturday"]
+          },
+          {
+            "schedule_id": 27,
+            "label": "weekend",
+            "days": ["sunday"]
+          }
+        ]
+      },
+      "outbound": null
+    }
+  },
+  {
+    "id": 7,
+    "name": "Riviera Ridge - Town Square Mall Shuttle",
+    "abbreviation": "RRT",
+    "color": "#33558f",
+    "direction": {
+      "inbound": {
+        "schedules": [
+          {
+            "schedule_id": 28,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday"]
+          },
+          {
+            "schedule_id": 29,
+            "label": "weekday",
+            "days": ["friday"]
+          },
+          {
+            "schedule_id": 30,
+            "label": "weekend",
+            "days": ["saturday"]
+          },
+          {
+            "schedule_id": 31,
+            "label": "weekend",
+            "days": ["sunday"]
+          }
+        ]
+      },
+      "outbound": null
+    }
+  },
+  {
+    "id": 8,
+    "name": "Oakdale Commons Shuttle",
+    "abbreviation": "OC",
+    "color": "#4f3da5",
+    "direction": {
+      "inbound": {
+        "schedules": [
+          {
+            "schedule_id": 32,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday"]
+          },
+          {
+            "schedule_id": 33,
+            "label": "weekday",
+            "days": ["friday"]
+          },
+          {
+            "schedule_id": 34,
+            "label": "weekend",
+            "days": ["saturday", "sunday"]
+          }
+        ]
+      },
+      "outbound": null
+    }
+  },
+  {
+    "id": 9,
+    "name": "Campus Shuttle",
+    "abbreviation": "CS",
+    "color": "#711fa8",
+    "direction": {
+      "inbound": {
+        "schedules": [
+          {
+            "schedule_id": 35,
+            "label": "weekend",
+            "days": ["saturday"]
+          },
+          {
+            "schedule_id": 36,
+            "label": "weekend",
+            "days": ["sunday"]
+          },
+          {
+            "schedule_id": 99,
+            "label": "weekday",
+            "days": ["monday", "tuesday", "wednesday", "thursday", "friday"]
+          }
+        ]
+      },
+      "outbound": null
+    }
+  }
+]
