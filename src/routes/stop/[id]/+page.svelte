@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import StopPanel from '$lib/components/panels/StopPanel.svelte';
   import { onMount } from 'svelte';
+  import StopPanel from '$lib/components/panels/StopPanel.svelte';
 
   export let data;
   let buses = data.buses;
@@ -19,6 +18,8 @@
     selectedStop = stops.find((stop) => stop.id === selectedStopId) ?? stops[0];
 
     ready = true;
+
+    setTimeout(() => window.location.reload(), 40000);
   });
 
   $: if (ready) {
@@ -27,14 +28,13 @@
 </script>
 
 {#if ready}
-  <button
-    on:click={() => window.location.reload()}
-    class="ml-8 mt-2 border-2 border-black px-2 py-1"
-  >
-    <i class="fa-solid fa-arrows-rotate" />
-  </button>
-
   <div class="mx-5 my-5 flex items-center">
+    <button
+      on:click={() => window.location.reload()}
+      class="mr-3 rounded-full border-2 border-gray-500 px-2"
+    >
+      <i class="fa-solid fa-arrows-rotate" />
+    </button>
     <label for="stop">Stop: </label>
     <select
       name="stop"
@@ -49,7 +49,5 @@
     </select>
   </div>
 
-  {#key selectedStop}
-    <StopPanel stop={selectedStop} {buses} />
-  {/key}
+  <StopPanel stop={selectedStop} {buses} />
 {/if}

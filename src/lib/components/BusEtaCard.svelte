@@ -24,12 +24,13 @@
   }
 </script>
 
-<div
+<a
+  href="/bus/{bus.id}"
   style="--bg-color: {route.color}"
-  class="bg-[var(--bg-color)] rounded-md px-3 py-2 mb-2 relative text-white shadow-slate-200 shadow-md"
+  class="block mb-2 bg-[var(--bg-color)] rounded-md px-3 py-2 relative text-white shadow-slate-200 border-transparent border-2 shadow-md hover:shadow-xl hover:border-black hover:z-10 hover:shadow-gray-700 focus:shadow-xl focus:border-black focus:z-10 focus:shadow-gray-700"
 >
   <div class="absolute top-0 right-1">
-    <p class="text-5xl font-bold opacity-30">
+    <p class="text-5xl font-bold opacity-30 select-none">
       {route.abbreviation}
     </p>
   </div>
@@ -42,7 +43,9 @@
         <div>
           <p class="text-2xl mb-1">{route.name}</p>
           {#if doesRouteHaveTwoDirections(route)}
-            <p class="text-sm">{bus.direction === 'inbound' ? 'Inbound' : 'Outbound'}</p>
+            <p class="text-sm">
+              {bus.direction === 'inbound' ? 'Inbound' : 'Outbound'}
+            </p>
           {/if}
         </div>
         <p class="font-bold text-right mt-1 ml-2 min-w-max">
@@ -51,4 +54,4 @@
       </div>
     </div>
   </div>
-</div>
+</a>

@@ -7,6 +7,7 @@
   export let stop: Stop;
   export let buses: Bus[];
 
+  let dataLoaded = false;
   let selectedStop = stop;
   let incomingBuses: Bus[] = [];
   let connectedRoutes: Route[] = [];
@@ -51,6 +52,7 @@
       return relatedSchedules.some(isUsedByRoute);
     };
 
+    dataLoaded = true;
     incomingBuses = buses;
     relatedSchedules = schedules.filter(byStopId);
     connectedRoutes = routes.filter(byRelatedSchedule);
@@ -62,7 +64,7 @@
 <div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
   <div class="flex items-center w-full">
     <div class="w-fit flex flex-col items-center">
-      <div class="bg-sky-500 w-[25px] h-[25px]" />
+      <div class="bg-sky-500 w-[25px] h-[25px] rounded-md" />
       <p class="text-center text-xs">#{selectedStop.id}</p>
     </div>
     <div class="ml-5 w-full">
@@ -75,11 +77,17 @@
 <div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
   <div class="ml-2 pt-2">
     <p class="text-xl mb-1">Incoming Buses</p>
-    <div class="mt-4">
-      {#each incomingBuses as bus}
-        <BusEtaCard {bus} route={getRoute(bus.route_id)} />
-      {/each}
-    </div>
+    {#if dataLoaded}
+      <div class="mt-4">
+        {#if incomingBuses.length === 0}
+          <p class="text-slate-600 text-center">No running buses at this time.</p>
+        {:else}
+          {#each incomingBuses as bus}
+            <BusEtaCard {bus} route={getRoute(bus.route_id)} />
+          {/each}
+        {/if}
+      </div>
+    {/if}
   </div>
 </div>
 

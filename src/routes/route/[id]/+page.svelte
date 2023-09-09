@@ -1,26 +1,27 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import RoutePanel from '$lib/components/panels/RoutePanel.svelte';
   import { onMount } from 'svelte';
+  import RoutePanel from '$lib/components/panels/RoutePanel.svelte';
+
+  export let data;
 
   let ready = false;
 
   let routes: Route[];
   let route: Route;
 
-  let _routeId = $page.url.searchParams.get('id');
-  let selectedRouteId = _routeId ? Number(_routeId) : 0;
+  let selectedRouteId = data.routeId;
+  let selectedRoute: Route;
 
   onMount(async () => {
     routes = (await fetch('/data/routes.json').then((res) => res.json())) ?? [];
 
-    route = routes.find((route) => route.id === selectedRouteId) ?? routes[0];
+    selectedRoute = routes.find((route) => route.id === selectedRouteId) ?? routes[0];
 
     ready = true;
   });
 
   $: if (ready) {
-    route = routes.find((route) => route.id === selectedRouteId) ?? routes[0];
+    selectedRoute = routes.find((route) => route.id === selectedRouteId) ?? routes[0];
   }
 </script>
 
@@ -32,14 +33,13 @@
       id="route"
       class="bg-slate-300 ml-2 p-1 w-full rounded-md"
       bind:value={selectedRouteId}
+      on:change={() => (window.location.href = `/route/${selectedRouteId}`)}
     >
-      {#each routes as route, index}
-        <option value={index}>{route.name}</option>
+      {#each routes as route}
+        <option value={route.id}>{route.name}</option>
       {/each}
     </select>
   </div>
 
-  {#key route}
-    <RoutePanel {route} />
-  {/key}
+  <RoutePanel route={selectedRoute} />
 {/if}

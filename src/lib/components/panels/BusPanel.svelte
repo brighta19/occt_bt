@@ -1,33 +1,17 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import Header from '../Header.svelte';
 
-  const bus = {
-    id: 22,
-    route: {
-      id: 1,
-      name: 'Westside',
-      group: {
-        id: 1,
-        name: 'Westside'
-      },
-      direction: 'inbound',
-      color: '#4fcaff'
-    },
-    status: {
-      delayed: false,
-      load: 'empty'
-    },
-    stops: [
-      {
-        name: 'Main & Murray',
-        eta: 0
-      },
-      {
-        name: 'Main & Floral',
-        eta: 1000 * 60 * 5
-      }
-    ]
-  };
+  export let bus: Bus;
+
+  let dataLoaded = false;
+  let route: Route;
+
+  async function fetchData() {
+    let routes: Route[] = (await fetch('/data/routes.json').then((res) => res.json())) ?? [];
+
+    return { routes };
+  }
 
   function toTimeRemaining(epochTime: number) {
     let date = new Date(epochTime);
@@ -41,6 +25,15 @@
     }
     return minutes;
   }
+
+  onMount(async () => {
+    let { routes } = await fetchData();
+
+    dataLoaded = true;
+    route = routes.find((route) => route.id === bus.route_id)!;
+
+    console.log(routes, bus.route_id);
+  });
 </script>
 
 <Header name="Bus" />
@@ -53,15 +46,17 @@
     </div>
     <div class="ml-5 w-full">
       <p class="text-gray-500 mb-1">Route</p>
-      <div style="--bg-color: {bus.route.color}" class="rounded-md bg-[var(--bg-color)] py-1 px-3">
-        <p class="text-white text-xl">{bus.route.group.name}</p>
-        <p class="capitalize text-white text-sm">{bus.route.direction}</p>
-      </div>
+      {#if dataLoaded}
+        <div style="--bg-color: {route.color}" class="rounded-md bg-[var(--bg-color)] py-1 px-3">
+          <p class="text-white text-xl">{route.name}</p>
+          <p class="text-white text-sm">{bus.direction === 'inbound' ? 'Inbound' : 'Outbound'}</p>
+        </div>
+      {/if}
     </div>
   </div>
 </div>
 
-<div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
+<!-- <div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
   <div class="ml-2 pt-2">
     <p class="text-xl mb-1">Status</p>
     <div class="border-2 border-gray-200 p-2">
@@ -91,4 +86,4 @@
       {/each}
     </div>
   </div>
-</div>
+</div> -->

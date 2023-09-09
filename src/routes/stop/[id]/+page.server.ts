@@ -1,4 +1,4 @@
-import type { RequestEvent } from '../$types';
+import type { PageServerLoad } from './$types';
 
 // type VehicleData = {
 //     get_vehicles: {
@@ -14,7 +14,7 @@ import type { RequestEvent } from '../$types';
 
 type StopEtaData = {
   get_stop_etas: {
-    id: string;
+    id: string; // number
     enRoute: {
       blockID: number;
       stopID: number;
@@ -28,7 +28,7 @@ type StopEtaData = {
       statuscolor: string;
       track: number;
       direction: 'Inbound' | 'Outbound';
-      directionAbbr: 'Out';
+      directionAbbr: 'Out' | 'In';
       equipmentID: string;
       routeID: number;
     }[];
@@ -38,32 +38,23 @@ type StopEtaData = {
 let routeConversions: RouteConversion[] = [];
 
 function getInternalRoute(externalRouteId: number) {
-  let internalRoute = { route_id: 0, direction: 'inbound' };
-  internalRoute =
-    routeConversions.find((conversion) => conversion.external_route_id === externalRouteId)
-      ?.internal ?? internalRoute;
-  return internalRoute;
+  const byExternalRouteId = (conversion: RouteConversion) => {
+    return conversion.external_route_id === externalRouteId;
+  };
+
+  return (
+    routeConversions.find(byExternalRouteId)?.internal ?? {
+      route_id: 0,
+      direction: 'inbound'
+    }
+  );
 }
 
-export async function load(event: RequestEvent) {
-  const stopId = Number(event.params.stopId);
+export const load: PageServerLoad = async ({ params, fetch: localFetch }) => {
+  const stopId = Number(params.id);
   let buses: Bus[] = [];
 
-  // const endpoint =
-  //     'https://binghamtonupublic.etaspot.net/service.php?service=get_vehicles&includeETAData=1&inService=1&orderedETAArray=1&token=TESTING';
-  // const data: VehicleData | undefined = await fetch(endpoint).then((res) => res.json());
-
-  // if (data !== undefined) {
-  //     // buses.push(
-  //     //     ...data.get_vehicles.map((vehicle) => ({
-  //     //         id: Number(vehicle.equipmentID),
-  //     //         next_stop_id: vehicle.nextStopID,
-  //     //         next_stop_eta: vehicle.nextStopETA
-  //     //     }))
-  //     // );
-  // }
-
-  routeConversions = await event.fetch('/data/route_conversion.json').then((res) => res.json());
+  routeConversions = await localFetch('/data/route_conversion.json').then((res) => res.json());
 
   const endpoint = `http://binghamtonupublic.etaspot.net/service.php?service=get_stop_etas&stopID=${stopId}&statusData=1&token=TESTING`;
   const data: StopEtaData | undefined = await fetch(endpoint).then((res) => res.json());
@@ -84,4 +75,4 @@ export async function load(event: RequestEvent) {
   }
 
   return { stopId, buses };
-}
+};

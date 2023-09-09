@@ -3,7 +3,7 @@
 </script>
 
 <a
-  href="/route?id={route.id}"
+  href="/route/{route.id}"
   class="inline-flex rounded-xl hover:bg-white hover:underline focus:bg-white focus:underline bg-gray-200 py-1 px-2 mb-2 mr-2 border-[1px] border-black items-center shadow-slate-200 shadow-md"
 >
   <div

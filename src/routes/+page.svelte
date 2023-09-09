@@ -15,7 +15,7 @@
       <br />
       <a href="/stop/1">Stop</a>
       <br />
-      <a href="/route">Route</a>
+      <a href="/route/1">Route</a>
     </div>
   </div>
 </div>
