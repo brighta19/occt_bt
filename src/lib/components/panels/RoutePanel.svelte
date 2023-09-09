@@ -1,19 +1,7 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import Header from '../header.svelte';
+  import Header from '../Header.svelte';
 
   export let route: Route;
-
-  let data;
-  let dataLoadError = false;
-
-  onMount(async () => {
-    data = await fetch('/data/routes.json').then((res) => res.json());
-    if (data === undefined) {
-      dataLoadError = true;
-      return;
-    }
-  });
 
   function toTimeRemaining(epochTime: number) {
     let date = new Date(epochTime);
@@ -29,7 +17,7 @@
   }
 </script>
 
-<Header>Route</Header>
+<Header name="Route" />
 
 <div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
   <div class="flex items-center w-full">

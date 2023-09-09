@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import RoutePanel from '$lib/components/panels/route.svelte';
+  import RoutePanel from '$lib/components/panels/RoutePanel.svelte';
   import { onMount } from 'svelte';
 
   let ready = false;

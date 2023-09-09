@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Header from '../header.svelte';
+  import Header from '../Header.svelte';
 
   const bus = {
     id: 22,
@@ -43,7 +43,7 @@
   }
 </script>
 
-<Header>Bus</Header>
+<Header name="Bus" />
 
 <div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
   <div class="flex items-center w-full">

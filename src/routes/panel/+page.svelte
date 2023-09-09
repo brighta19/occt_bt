@@ -1,5 +1,5 @@
 <script>
-  import HomePanel from '$lib/components/panels/home.svelte';
+  import HomePanel from '$lib/components/panels/HomePanel.svelte';
 </script>
 
 <HomePanel />

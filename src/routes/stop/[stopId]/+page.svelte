@@ -1,9 +1,10 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import StopPanel from '$lib/components/panels/stop.svelte';
+  import StopPanel from '$lib/components/panels/StopPanel.svelte';
   import { onMount } from 'svelte';
 
   export let data;
+  let buses = data.buses;
 
   let ready = false;
 
@@ -49,6 +50,6 @@
   </div>
 
   {#key selectedStop}
-    <StopPanel stop={selectedStop} {data} />
+    <StopPanel stop={selectedStop} {buses} />
   {/key}
 {/if}

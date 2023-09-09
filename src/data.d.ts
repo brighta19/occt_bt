@@ -12,20 +12,18 @@ type Route = {
   color: string;
   direction: {
     inbound: {
-      schedules: {
-        schedule_id: number;
-        label: string;
-        days: string[];
-      }[];
+      schedules: RouteSchedule[];
     } | null;
     outbound: {
-      schedules: {
-        schedule_id: number;
-        label: string;
-        days: string[];
-      }[];
+      schedules: RouteSchedule[];
     } | null;
   };
+};
+
+type RouteSchedule = {
+  schedule_id: number;
+  label: string;
+  days: string[];
 };
 
 type Schedule = {
