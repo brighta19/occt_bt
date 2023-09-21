@@ -121,7 +121,8 @@
     "abbreviation": "LRS",
     "color": "#72b043",
     "direction": {
-      "inbound": {
+      "inbound": null,
+      "outbound": {
         "schedules": [
           {
             "schedule_id": 20,
@@ -139,8 +140,7 @@
             "days": ["saturday", "sunday"]
           }
         ]
-      },
-      "outbound": null
+      }
     }
   },
   {
@@ -149,7 +149,8 @@
     "abbreviation": "IU",
     "color": "#007f4e",
     "direction": {
-      "inbound": {
+      "inbound": null,
+      "outbound": {
         "schedules": [
           {
             "schedule_id": 23,
@@ -157,8 +158,7 @@
             "days": ["monday", "tuesday", "wednesday", "thursday", "friday"]
           }
         ]
-      },
-      "outbound": null
+      }
     }
   },
   {
@@ -167,7 +167,8 @@
     "abbreviation": "UC",
     "color": "#166d78",
     "direction": {
-      "inbound": {
+      "inbound": null,
+      "outbound": {
         "schedules": [
           {
             "schedule_id": 24,
@@ -190,8 +191,7 @@
             "days": ["sunday"]
           }
         ]
-      },
-      "outbound": null
+      }
     }
   },
   {
@@ -200,7 +200,8 @@
     "abbreviation": "RRT",
     "color": "#33558f",
     "direction": {
-      "inbound": {
+      "inbound": null,
+      "outbound": {
         "schedules": [
           {
             "schedule_id": 28,
@@ -223,8 +224,7 @@
             "days": ["sunday"]
           }
         ]
-      },
-      "outbound": null
+      }
     }
   },
   {
@@ -233,7 +233,8 @@
     "abbreviation": "OC",
     "color": "#4f3da5",
     "direction": {
-      "inbound": {
+      "inbound": null,
+      "outbound": {
         "schedules": [
           {
             "schedule_id": 32,
@@ -251,8 +252,7 @@
             "days": ["saturday", "sunday"]
           }
         ]
-      },
-      "outbound": null
+      }
     }
   },
   {
@@ -261,7 +261,8 @@
     "abbreviation": "CS",
     "color": "#711fa8",
     "direction": {
-      "inbound": {
+      "inbound": null,
+      "outbound": {
         "schedules": [
           {
             "schedule_id": 35,
@@ -279,8 +280,7 @@
             "days": ["monday", "tuesday", "wednesday", "thursday", "friday"]
           }
         ]
-      },
-      "outbound": null
+      }
     }
   }
 ]

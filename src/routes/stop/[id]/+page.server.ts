@@ -45,7 +45,7 @@ function getInternalRoute(externalRouteId: number) {
   return (
     routeConversions.find(byExternalRouteId)?.internal ?? {
       route_id: 0,
-      direction: 'inbound'
+      direction: 'outbound'
     }
   );
 }

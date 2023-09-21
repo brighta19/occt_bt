@@ -30,8 +30,9 @@
 {#if ready}
   <div class="mx-5 my-5 flex items-center">
     <button
+      type="button"
+      class="mr-3 rounded-full border border-gray-500 px-2"
       on:click={() => window.location.reload()}
-      class="mr-3 rounded-full border-2 border-gray-500 px-2"
     >
       <i class="fa-solid fa-arrows-rotate" />
     </button>

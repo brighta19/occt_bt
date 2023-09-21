@@ -26,8 +26,8 @@
 
 <a
   href="/bus/{bus.id}"
-  style="--bg-color: {route.color}"
-  class="block mb-2 bg-[var(--bg-color)] rounded-md px-3 py-2 relative text-white shadow-slate-200 border-transparent border-2 shadow-md hover:shadow-xl hover:border-black hover:z-10 hover:shadow-gray-700 focus:shadow-xl focus:border-black focus:z-10 focus:shadow-gray-700"
+  style:--bg-color={route.color}
+  class="block mb-2 bg-[--bg-color] rounded-md p-2 relative text-white shadow-slate-200 border-transparent border-2 shadow-md hover:border-black focus:border-black hover:brightness-90 focus:brightness-90"
 >
   <div class="absolute top-0 right-1">
     <p class="text-5xl font-bold opacity-30 select-none">

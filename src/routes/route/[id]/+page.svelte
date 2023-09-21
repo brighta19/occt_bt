@@ -7,7 +7,6 @@
   let ready = false;
 
   let routes: Route[];
-  let route: Route;
 
   let selectedRouteId = data.routeId;
   let selectedRoute: Route;
