@@ -10,5 +10,5 @@
     style="--bg-color: {route.color}"
     class="rounded-full bg-[--bg-color] w-[15px] h-[15px] mr-1"
   />
-  <p class="text-sm">{route.name}</p>
+  <p class="text-sm">{route.abbreviation}</p>
 </a>

@@ -32,17 +32,17 @@
     return (relatedSchedule: Schedule) => {
       let isARelatedSchedule = generateIsARelatedScheduleFunction(relatedSchedule);
       return (
-        route.direction.inbound?.schedules.some(isARelatedSchedule) ||
-        route.direction.outbound?.schedules.some(isARelatedSchedule)
+        (route.direction.inbound?.schedules.some(isARelatedSchedule) ||
+          route.direction.outbound?.schedules.some(isARelatedSchedule)) ??
+        false
       );
     };
   }
 
   onMount(async () => {
     let { routes, schedules } = await fetchData();
-    let relatedSchedules: Schedule[] = [];
 
-    let byStopId = (schedule: Schedule) => {
+    let byStop = (schedule: Schedule) => {
       let isSelectedStop = (stopId: number) => stopId === selectedStop.id;
       return schedule.stop_ids.some(isSelectedStop);
     };
@@ -54,7 +54,7 @@
 
     dataLoaded = true;
     incomingBuses = buses;
-    relatedSchedules = schedules.filter(byStopId);
+    relatedSchedules = schedules.filter(byStop);
     connectedRoutes = routes.filter(byRelatedSchedule);
   });
 </script>
@@ -69,7 +69,7 @@
     </div>
     <div class="ml-5 w-full">
       <p class="text-gray-500">Name</p>
-      <p class="text-2xl">{selectedStop.name}</p>
+      <p class="text-xl">{selectedStop.name}</p>
     </div>
   </div>
 </div>

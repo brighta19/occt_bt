@@ -41,16 +41,20 @@
 <div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
   <div class="flex items-center w-full">
     <div class="w-fit flex flex-col items-center">
-      <div class="bg-slate-500 w-[25px] h-[25px]" />
+      <div class="bg-slate-500 w-[25px] h-[25px] rounded-md" />
       <p class="text-center text-xs">#{bus.id}</p>
     </div>
     <div class="ml-5 w-full">
       <p class="text-gray-500 mb-1">Route</p>
       {#if dataLoaded}
-        <div style="--bg-color: {route.color}" class="rounded-md bg-[var(--bg-color)] py-1 px-3">
-          <p class="text-white text-xl">{route.name}</p>
+        <a
+          href="/route/{route.id}"
+          style:--bg-color={route.color}
+          class="block border-2 rounded-md border-transparent hover:border-black focus:border-black bg-[--bg-color] py-1 px-3"
+        >
+          <p class="text-white text-xl route-name">{route.name}</p>
           <p class="text-white text-sm">{bus.direction === 'inbound' ? 'Inbound' : 'Outbound'}</p>
-        </div>
+        </a>
       {/if}
     </div>
   </div>
@@ -87,3 +91,10 @@
     </div>
   </div>
 </div> -->
+
+<style>
+  a:hover .route-name,
+  a:focus .route-name {
+    text-decoration: underline;
+  }
+</style>

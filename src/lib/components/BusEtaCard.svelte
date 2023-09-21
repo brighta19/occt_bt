@@ -30,18 +30,16 @@
   class="block mb-2 bg-[--bg-color] rounded-md p-2 relative text-white shadow-slate-200 border-transparent border-2 shadow-md hover:border-black focus:border-black hover:brightness-90 focus:brightness-90"
 >
   <div class="absolute top-0 right-1">
-    <p class="text-5xl font-bold opacity-30 select-none">
-      {route.abbreviation}
-    </p>
+    <p class="text-5xl font-bold opacity-30 select-none" aria-hidden="true">{route.abbreviation}</p>
   </div>
   <div class="flex relative">
     <div class="text-3xl">
       <i class="fa-solid fa-bus" aria-hidden="true" />
     </div>
     <div class="pl-2 w-full">
-      <div class="flex justify-between" style="text-shadow: 0 2px 5px #888">
+      <div class="flex justify-between" style="text-shadow: 0 0 6px #333">
         <div>
-          <p class="text-2xl mb-1">{route.name}</p>
+          <p class="text-xl route-name">{route.name}</p>
           {#if doesRouteHaveTwoDirections(route)}
             <p class="text-sm">
               {bus.direction === 'inbound' ? 'Inbound' : 'Outbound'}
@@ -55,3 +53,10 @@
     </div>
   </div>
 </a>
+
+<style>
+  a:hover .route-name,
+  a:focus .route-name {
+    text-decoration: underline;
+  }
+</style>
