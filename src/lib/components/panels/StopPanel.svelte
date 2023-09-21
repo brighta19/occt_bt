@@ -41,6 +41,7 @@
 
   onMount(async () => {
     let { routes, schedules } = await fetchData();
+    let relatedSchedules: Schedule[] = [];
 
     let byStop = (schedule: Schedule) => {
       let isSelectedStop = (stopId: number) => stopId === selectedStop.id;
