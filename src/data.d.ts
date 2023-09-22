@@ -53,3 +53,10 @@ type RouteConversion = {
     direction: 'inbound' | 'outbound';
   };
 };
+
+type StopETA = {
+  stop_id: number;
+  route_id: number;
+  direction: string;
+  eta: number;
+};

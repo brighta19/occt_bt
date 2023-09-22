@@ -24,24 +24,25 @@
     return connectedRoutes.find((route) => route.id === routeId)!;
   }
 
-  function generateIsARelatedScheduleFunction(relatedSchedule: Schedule) {
+  function generateIsRelatedScheduleFunction(relatedSchedule: Schedule) {
     return (routeSchedule: RouteSchedule) => routeSchedule.schedule_id === relatedSchedule.id;
   }
 
   function generateIsUsedByRouteFunction(route: Route) {
     return (relatedSchedule: Schedule) => {
-      let isARelatedSchedule = generateIsARelatedScheduleFunction(relatedSchedule);
+      let isRelatedSchedule = generateIsRelatedScheduleFunction(relatedSchedule);
       return (
-        (route.direction.inbound?.schedules.some(isARelatedSchedule) ||
-          route.direction.outbound?.schedules.some(isARelatedSchedule)) ??
+        (route.direction.inbound?.schedules.some(isRelatedSchedule) ||
+          route.direction.outbound?.schedules.some(isRelatedSchedule)) ??
         false
       );
     };
   }
 
   onMount(async () => {
-    let { routes, schedules } = await fetchData();
     let relatedSchedules: Schedule[] = [];
+
+    let { routes, schedules } = await fetchData();
 
     let byStop = (schedule: Schedule) => {
       let isSelectedStop = (stopId: number) => stopId === selectedStop.id;
@@ -62,13 +63,13 @@
 
 <Header name="Stop" />
 
-<div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
+<div class="flex pb-5 mx-5 border-b border-b-gray-500 flex-col">
   <div class="flex items-center w-full">
     <div class="w-fit flex flex-col items-center">
       <div
         class="w-10 h-10 rounded-full border border-slate-600 p-1.5 flex items-center justify-center"
       >
-        <i class="text-slate-600 text-md fa-solid fa-location-dot" aria-hidden="true" />
+        <i class="text-slate-600 fa-solid fa-location-dot" aria-hidden="true" />
       </div>
     </div>
     <div class="ml-5 w-full">
@@ -78,8 +79,8 @@
   </div>
 </div>
 
-<div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
-  <div class="ml-2 pt-2">
+<div class="flex pb-5 mx-5 border-b border-b-gray-500 flex-col">
+  <div class="pt-2">
     <p class="text-xl mb-1">Incoming Buses</p>
     {#if dataLoaded}
       <div class="mt-4">
