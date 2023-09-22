@@ -34,7 +34,7 @@
       class="mr-3 rounded-full border border-gray-500 px-2"
       on:click={() => window.location.reload()}
     >
-      <i class="fa-solid fa-arrows-rotate" />
+      <i class="fa-solid fa-arrows-rotate" aria-hidden="true" />
     </button>
     <label for="stop">Stop: </label>
     <select
