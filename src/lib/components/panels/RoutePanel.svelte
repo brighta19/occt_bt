@@ -19,6 +19,10 @@
   let currentSchedule: Schedule | undefined;
   let daysOfCurrentSchedule: string[] = [];
 
+  let stops: Stop[] = [];
+  let timings: number[] = [];
+  let departures: number[] = [];
+
   let updaterBool = true;
 
   async function fetchData() {
@@ -30,7 +34,7 @@
   }
 
   function getFirstStopName() {
-    return stopNames.length > 0 ? stopNames[0] : '';
+    return stops.length > 0 ? stops[0] : '';
   }
 
   function doesRouteHaveTwoDirections(route: Route) {
@@ -110,9 +114,9 @@
 
     daysOfCurrentSchedule = routeSchedules.schedules.find(byRouteSchedule)?.days ?? [];
 
-    let toStopName = (stopId: number) => allStops.find((stop) => stop.id === stopId)?.name ?? '';
+    let toStop = (stopId: number) => allStops.find((stop) => stop.id === stopId)!;
 
-    stopNames = currentSchedule.stop_ids.map(toStopName);
+    stops = currentSchedule.stop_ids.map(toStop);
     departures = currentSchedule.departure_times;
     timings = currentSchedule.minutes_from_first_stop;
   }
@@ -126,10 +130,6 @@
     selectedDay = day;
     update();
   }
-
-  let stopNames: string[] = [];
-  let timings = [0, 3, 4, 5, 6, 7, 8];
-  let departures: number[] = [];
 
   onMount(async () => {
     let { stops, schedules } = await fetchData();
@@ -226,15 +226,17 @@
         {/key}
         are probably wrong. 🙃
       </p>
-      {#if stopNames.length === 0}
+      {#if stops.length === 0}
         <p class="mt-4 text-center border p-2">
           There are no schedules for <span class="capitalize">{selectedDay}</span>.
         </p>
       {:else}
         <div class="mt-4 border w-full flex overflow-x-auto snap-x">
-          {#each stopNames as stop, i}
+          {#each stops as stop, i}
             <div class="flex flex-col min-w-max text-center striped relative snap-start">
-              <div class="p-2 border-b">{stop}</div>
+              <div class="p-2 border-b">
+                <a href="/stop/{stop.id}" class="text-blue-400 underline"> {stop.name}</a>
+              </div>
               {#key updaterBool}
                 {#each departures as departure}
                   <div
