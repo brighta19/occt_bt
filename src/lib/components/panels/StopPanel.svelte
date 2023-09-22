@@ -65,8 +65,11 @@
 <div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
   <div class="flex items-center w-full">
     <div class="w-fit flex flex-col items-center">
-      <div class="bg-sky-500 w-[25px] h-[25px] rounded-md" />
-      <p class="text-center text-xs">#{selectedStop.id}</p>
+      <div
+        class="w-10 h-10 rounded-full border border-slate-600 p-1.5 flex items-center justify-center"
+      >
+        <i class="text-slate-600 text-md fa-solid fa-location-dot" aria-hidden="true" />
+      </div>
     </div>
     <div class="ml-5 w-full">
       <p class="text-gray-500">Name</p>

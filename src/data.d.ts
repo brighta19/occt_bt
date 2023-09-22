@@ -29,6 +29,7 @@ type RouteSchedule = {
 type Schedule = {
   id: number;
   stop_ids: number[];
+  minutes_from_first_stop: number[];
   pattern: {
     start_stop_id: number;
     destination_stop_id: number;
