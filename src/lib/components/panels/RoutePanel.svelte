@@ -62,8 +62,12 @@
   }
 
   function toTime(num: number) {
-    const minutes = num % 100;
-    const hours24 = Math.floor(num / 100);
+    let minutes = num % 100;
+    let hours24 = Math.floor(num / 100);
+    const date = new Date();
+    date.setHours(hours24, minutes, 0, 0);
+    hours24 = date.getHours();
+    minutes = date.getMinutes();
 
     let hours12Text = `${hours24}`;
     let minutesText = `${minutes}`.padStart(2, '0');
