@@ -1,10 +1,11 @@
 <script lang="ts">
   import 'leaflet/dist/leaflet.css';
-  import stops from '$lib/stops';
   import { onMount } from 'svelte';
   import type { Map } from 'leaflet';
 
   let element: HTMLElement;
+
+  let stops: Stop[] = [];
 
   let mapInitialView = {
     latitude: 42.0918,
@@ -12,7 +13,15 @@
     zoom: 14
   };
 
+  async function fetchData() {
+    let stops: Stop[] = (await fetch('/data/stops.json').then((res) => res.json())) ?? [];
+    return { stops };
+  }
+
   onMount(async () => {
+    let { stops: _stops } = await fetchData();
+    stops = _stops;
+
     let Leaflet = await import('leaflet');
 
     let map = createMap(Leaflet);
