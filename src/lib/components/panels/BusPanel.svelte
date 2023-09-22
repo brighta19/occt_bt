@@ -38,7 +38,7 @@
 
 <Header name="Bus" />
 
-<div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
+<div class="flex pb-5 mx-5 border-b border-b-gray-500 flex-col">
   <div class="flex items-center w-full">
     <div class="w-fit flex flex-col items-center">
       <div class="bg-slate-500 w-[25px] h-[25px] rounded-md" />
@@ -60,7 +60,7 @@
   </div>
 </div>
 
-<!-- <div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
+<!-- <div class="flex pb-5 mx-5 border-b border-b-gray-500 flex-col">
   <div class="ml-2 pt-2">
     <p class="text-xl mb-1">Status</p>
     <div class="border-2 border-gray-200 p-2">
