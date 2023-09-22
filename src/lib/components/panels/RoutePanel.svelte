@@ -34,7 +34,7 @@
   }
 
   function getFirstStopName() {
-    return stops.length > 0 ? stops[0] : '';
+    return stops.length > 0 ? stops[0].name : '';
   }
 
   function doesRouteHaveTwoDirections(route: Route) {
