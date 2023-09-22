@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import StopPanel from '$lib/components/panels/StopPanel.svelte';
 
   export let data;
@@ -19,7 +19,8 @@
 
     ready = true;
 
-    setTimeout(() => window.location.reload(), 40000);
+    let timeoutId = setTimeout(() => window.location.reload(), 40000);
+    onDestroy(() => clearTimeout(timeoutId));
   });
 
   $: if (ready) {

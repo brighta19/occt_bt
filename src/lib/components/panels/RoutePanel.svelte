@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import Header from '../Header.svelte';
 
   const DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
@@ -152,7 +152,8 @@
 
     update();
 
-    setInterval(() => (updaterBool = !updaterBool), 1000 * 30);
+    let intervalId = setInterval(() => (updaterBool = !updaterBool), 1000 * 30);
+    onDestroy(() => clearInterval(intervalId));
   });
 
   $: if (dataLoaded) update();
