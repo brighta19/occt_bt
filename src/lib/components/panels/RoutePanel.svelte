@@ -10,10 +10,16 @@
   export let route: Route;
 
   let dataLoaded = false;
+  let allStops: Stop[] = [];
+  let relatedSchedules: Schedule[] = [];
+
   let selectedDirection = 'outbound';
   let selectedDay = currentDay;
-  let relatedSchedules: Schedule[] = [];
-  let allStops: Stop[] = [];
+
+  let currentSchedule: Schedule | undefined;
+  let daysOfCurrentSchedule: string[] = [];
+
+  let updaterBool = true;
 
   async function fetchData() {
     let stops: Stop[] = (await fetch('/data/stops.json').then((res) => res.json())) ?? [];
@@ -23,8 +29,32 @@
     return { stops, schedules };
   }
 
+  function getFirstStopName() {
+    return stopNames.length > 0 ? stopNames[0] : '';
+  }
+
   function doesRouteHaveTwoDirections(route: Route) {
     return route.direction.inbound !== null && route.direction.outbound !== null;
+  }
+
+  function doesRouteHaveScheduleForDay(day: string) {
+    return (
+      (route.direction.inbound?.schedules.some((routeSchedule) =>
+        routeSchedule.days.some((d) => day == d)
+      ) ||
+        route.direction.outbound?.schedules.some((routeSchedule) =>
+          routeSchedule.days.some((d) => day == d)
+        )) ??
+      false
+    );
+  }
+
+  function isDayInCurrentSchedule(day: string) {
+    return daysOfCurrentSchedule.some((scheduleDay) => scheduleDay === day);
+  }
+
+  function isCurrentDayInCurrentSchedule() {
+    return daysOfCurrentSchedule.some((scheduleDay) => scheduleDay === currentDay);
   }
 
   function toTime(num: number) {
@@ -43,6 +73,58 @@
     }
 
     return `${hours12Text}:${minutesText} ${meridiemText}`;
+  }
+
+  function hasTimePassed(num: number) {
+    const minutes = num % 100;
+    const hours24 = Math.floor(num / 100);
+    const date = new Date();
+    date.setHours(hours24, minutes, 0, 0);
+
+    const currentDate = new Date();
+
+    return date.getTime() < currentDate.getTime();
+  }
+
+  function update() {
+    let routeSchedules =
+      selectedDirection === 'inbound' ? route.direction.inbound : route.direction.outbound;
+
+    if (routeSchedules === null) return;
+
+    let byRouteScheduleAndSelectedDay = (schedule: Schedule) => {
+      let isCurrentDaySchedule = (routeSchedule: RouteSchedule) => {
+        let isRouteSchedule = routeSchedule.schedule_id === schedule.id;
+        let isSelectedDay = (day: string) => day === selectedDay;
+        return isRouteSchedule && routeSchedule.days.some(isSelectedDay);
+      };
+      return routeSchedules?.schedules.some(isCurrentDaySchedule);
+    };
+
+    currentSchedule = relatedSchedules.find(byRouteScheduleAndSelectedDay);
+
+    if (currentSchedule === undefined) return;
+
+    let byRouteSchedule = (routeSchedule: RouteSchedule) =>
+      routeSchedule.schedule_id === currentSchedule?.id ?? false;
+
+    daysOfCurrentSchedule = routeSchedules.schedules.find(byRouteSchedule)?.days ?? [];
+
+    let toStopName = (stopId: number) => allStops.find((stop) => stop.id === stopId)?.name ?? '';
+
+    stopNames = currentSchedule.stop_ids.map(toStopName);
+    departures = currentSchedule.departure_times;
+    timings = currentSchedule.minutes_from_first_stop;
+  }
+
+  function updateDirection(direction: string) {
+    selectedDirection = direction;
+    update();
+  }
+
+  function updateDay(day: string) {
+    selectedDay = day;
+    update();
   }
 
   let stopNames: string[] = [];
@@ -69,43 +151,23 @@
     allStops = stops;
 
     update();
+
+    setInterval(() => (updaterBool = !updaterBool), 1000 * 30);
   });
 
   $: if (dataLoaded) update();
-
-  function update() {
-    let routeDirection =
-      selectedDirection === 'inbound' ? route.direction.inbound : route.direction.outbound;
-    if (routeDirection === null) return;
-
-    let currentSchedule = relatedSchedules.find((schedule) => {
-      return routeDirection?.schedules.some((routeSchedule) => {
-        return (
-          routeSchedule.days.some((day) => day === selectedDay) &&
-          routeSchedule.schedule_id === schedule.id
-        );
-      });
-    });
-    if (currentSchedule === undefined) return;
-
-    stopNames = currentSchedule.stop_ids.map(
-      (stopId) => allStops.find((stop) => stop.id === stopId)?.name ?? ''
-    );
-    departures = currentSchedule.departure_times;
-    timings = currentSchedule.minutes_from_first_stop;
-  }
 </script>
 
 <Header name="Route" />
 
-<div class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col">
+<div class="flex pb-5 mx-5 border-b border-b-gray-500 flex-col">
   <div class="flex items-center w-full">
     <div class="w-fit flex flex-col items-center">
       <div
         style:--color={route.color}
         class="bg-[--color] w-10 h-10 rounded-full p-1.5 center flex items-center justify-center"
       >
-        <i class="text-white text-md fa-solid fa-route" aria-hidden="true" />
+        <i class="text-white fa-solid fa-route" aria-hidden="true" />
       </div>
     </div>
     <div class="ml-5 w-full">
@@ -115,11 +177,8 @@
   </div>
 </div>
 
-<div
-  style:--route-color={route.color}
-  class="flex pb-5 mx-5 border-b-[1px] border-b-gray-500 flex-col"
->
-  <div class="ml-2 pt-2">
+<div style:--route-color={route.color} class="flex pb-5 mx-5 border-b-gray-500 flex-col">
+  <div class="mt-2 pt-2">
     <p class="text-xl mb-1">Schedule</p>
     <div class="mt-4">
       {#if doesRouteHaveTwoDirections(route)}
@@ -128,12 +187,9 @@
             <button
               type="button"
               style="text-shadow: 0 0 2px rgba(0,0,0,0.2)"
-              class="p-1 w-full bg-gray-200 rounded-md text-gray-800 border border-gray-800 capitalize"
-              class:btn-pressed={direction === selectedDirection}
-              on:click={() => {
-                selectedDirection = direction;
-                update();
-              }}
+              class="p-1 w-full bg-gray-100 rounded-md text-gray-800 border border-gray-800 capitalize"
+              class:btn-selected={direction === selectedDirection}
+              on:click={() => updateDirection(direction)}
             >
               <i
                 class="fa-solid fa-circle-arrow-{direction === 'inbound' ? 'down' : 'up'}"
@@ -145,36 +201,55 @@
         </div>
       {/if}
       <div class="flex mt-2 gap-2">
-        {#each DAYS as day}
-          <button
-            type="button"
-            style="text-shadow: 0 0 2px rgba(0,0,0,0.2)"
-            class="p-1 w-full bg-gray-200 rounded-md text-gray-800 border border-gray-600"
-            class:btn-pressed={day === selectedDay}
-            on:click={() => {
-              selectedDay = day;
-              update();
-            }}
-          >
-            {day[0].toUpperCase()}
-          </button>
-        {/each}
+        {#key daysOfCurrentSchedule}
+          {#each DAYS as day}
+            <button
+              type="button"
+              style="text-shadow: 0 0 2px rgba(0,0,0,0.2)"
+              class="p-1 w-full bg-gray-100 rounded-md text-gray-800 border border-gray-600 disabled:text-gray-300 disabled:border-gray-300"
+              class:border-dashed={day === currentDay}
+              class:btn-selected={isDayInCurrentSchedule(day)}
+              disabled={!doesRouteHaveScheduleForDay(day)}
+              on:click={() => updateDay(day)}
+            >
+              {day[0].toUpperCase()}
+            </button>
+          {/each}
+        {/key}
       </div>
       <p class="mt-4 text-center text-slate-600">
-        The times for the stops besides the first (<em
-          >{stopNames.length > 0 ? stopNames[0] : ''}</em
-        >) are very likely wrong 🙃
+        The times for the stops besides the first
+        {#key currentSchedule}
+          {#if currentSchedule}
+            (<em>{getFirstStopName()}</em>)
+          {/if}
+        {/key}
+        are probably wrong. 🙃
       </p>
-      <div class="mt-4 border max-w-min flex overflow-x-auto snap-x">
-        {#each stopNames as stop, i}
-          <div class="flex flex-col min-w-max text-center striped relative snap-start">
-            <div class="p-2 border-b">{stop}</div>
-            {#each departures as departure}
-              <div class="p-2">{toTime(departure + (timings[i] ?? 0))}</div>
-            {/each}
-          </div>
-        {/each}
-      </div>
+      {#if stopNames.length === 0}
+        <p class="mt-4 text-center border p-2">
+          There are no schedules for <span class="capitalize">{selectedDay}</span>.
+        </p>
+      {:else}
+        <div class="mt-4 border w-full flex overflow-x-auto snap-x">
+          {#each stopNames as stop, i}
+            <div class="flex flex-col min-w-max text-center striped relative snap-start">
+              <div class="p-2 border-b">{stop}</div>
+              {#key updaterBool}
+                {#each departures as departure}
+                  <div
+                    class="p-2"
+                    class:text-gray-400={isCurrentDayInCurrentSchedule() &&
+                      hasTimePassed(departure + (timings[i] ?? 0))}
+                  >
+                    {toTime(departure + (timings[i] ?? 0))}
+                  </div>
+                {/each}
+              {/key}
+            </div>
+          {/each}
+        </div>
+      {/if}
     </div>
   </div>
 </div>
@@ -184,7 +259,7 @@
     background-color: #f3f3f3;
   }
 
-  button.btn-pressed {
+  button.btn-selected {
     @apply bg-[--route-color] text-white shadow-inner;
   }
 </style>
