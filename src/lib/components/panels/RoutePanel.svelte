@@ -25,6 +25,8 @@
 
   let updaterBool = true;
 
+  let intervalId: NodeJS.Timeout | undefined;
+
   async function fetchData() {
     let stops: Stop[] = (await fetch('/data/stops.json').then((res) => res.json())) ?? [];
     let schedules: Schedule[] =
@@ -156,9 +158,10 @@
 
     update();
 
-    let intervalId = setInterval(() => (updaterBool = !updaterBool), 1000 * 30);
-    onDestroy(() => clearInterval(intervalId));
+    intervalId = setInterval(() => (updaterBool = !updaterBool), 1000 * 30);
   });
+
+  onDestroy(() => intervalId && clearInterval(intervalId));
 
   $: if (dataLoaded) update();
 </script>

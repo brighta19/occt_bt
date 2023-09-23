@@ -12,6 +12,8 @@
   let selectedStopId = data.stopId;
   let selectedStop: Stop;
 
+  let timeoutId: NodeJS.Timeout | undefined;
+
   onMount(async () => {
     stops = (await fetch('/data/stops.json').then((res) => res.json())) ?? [];
 
@@ -19,9 +21,10 @@
 
     ready = true;
 
-    let timeoutId = setTimeout(() => window.location.reload(), 40000);
-    onDestroy(() => clearTimeout(timeoutId));
+    timeoutId = setTimeout(() => window.location.reload(), 40000);
   });
+
+  onDestroy(() => timeoutId && clearTimeout(timeoutId));
 
   $: if (ready) {
     selectedStop = stops.find((stop) => stop.id === selectedStopId) ?? stops[0];
