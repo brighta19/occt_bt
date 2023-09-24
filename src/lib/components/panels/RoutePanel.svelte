@@ -16,7 +16,7 @@
   let relatedSchedules: Schedule[] = [];
 
   let selectedDirection = 'outbound';
-  {
+  if (doesRouteHaveTwoDirections(route)) {
     let _direction = localStorage.getItem(LOCAL_STORAGE_DIRECTION_PROPERTY);
     if (_direction === null) {
       localStorage.setItem(LOCAL_STORAGE_DIRECTION_PROPERTY, selectedDirection);
