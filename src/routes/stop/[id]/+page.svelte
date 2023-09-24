@@ -5,33 +5,45 @@
   export let data;
   let buses = data.buses;
 
-  let ready = false;
-
-  let stops: Stop[];
+  let allStops: Stop[];
 
   let selectedStopId = data.stopId;
-  let selectedStop: Stop;
+  let selectedStop: Stop | null = null;
 
+  let isLoading = false;
   let timeoutId: NodeJS.Timeout | undefined;
 
+  async function fetchData() {
+    let stops: Stop[] = (await fetch('/data/stops.json').then((res) => res.json())) ?? [];
+    return { stops };
+  }
+
+  function loadNewStop() {
+    window.location.href = `/stop/${selectedStopId}`;
+    isLoading = true;
+  }
+
+  function findStop(stopId: number) {
+    return allStops.find((stop) => stop.id === stopId) ?? null;
+  }
+
   onMount(async () => {
-    stops = (await fetch('/data/stops.json').then((res) => res.json())) ?? [];
+    let { stops } = await fetchData();
+    allStops = stops;
 
-    selectedStop = stops.find((stop) => stop.id === selectedStopId) ?? stops[0];
-
-    ready = true;
+    selectedStop = findStop(selectedStopId);
 
     timeoutId = setTimeout(() => window.location.reload(), 40000);
   });
 
   onDestroy(() => timeoutId && clearTimeout(timeoutId));
 
-  $: if (ready) {
-    selectedStop = stops.find((stop) => stop.id === selectedStopId) ?? stops[0];
+  $: if (selectedStop != null) {
+    selectedStop = findStop(selectedStopId);
   }
 </script>
 
-{#if ready}
+{#if selectedStop != null}
   <div class="mx-5 my-5 flex items-center">
     <button
       type="button"
@@ -46,13 +58,15 @@
       id="stop"
       class="bg-slate-300 ml-2 p-1 w-full rounded-md"
       bind:value={selectedStopId}
-      on:change={() => (window.location.href = `/stop/${selectedStopId}`)}
+      on:change={loadNewStop}
     >
-      {#each stops as stop}
+      {#each allStops as stop}
         <option value={stop.id}>{stop.name}</option>
       {/each}
     </select>
   </div>
 
-  <StopPanel stop={selectedStop} {buses} />
+  {#if !isLoading}
+    <StopPanel stop={selectedStop} {buses} />
+  {/if}
 {/if}
