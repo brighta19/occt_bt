@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import RoutePanel from '$lib/components/panels/RoutePanel.svelte';
+  import { activeMenuItem } from '$lib/data.js';
 
   export let data;
 
@@ -10,6 +11,8 @@
   let selectedRoute: Route | null = null;
 
   let isLoading = false;
+
+  activeMenuItem.set('routes');
 
   async function fetchData() {
     let routes: Route[] = (await fetch('/data/routes.json').then((res) => res.json())) ?? [];

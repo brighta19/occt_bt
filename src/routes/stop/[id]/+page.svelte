@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
   import StopPanel from '$lib/components/panels/StopPanel.svelte';
+  import { activeMenuItem } from '$lib/data.js';
 
   export let data;
   let buses = data.buses;
@@ -12,6 +13,8 @@
 
   let isLoading = false;
   let timeoutId: NodeJS.Timeout | undefined;
+
+  activeMenuItem.set('stops');
 
   async function fetchData() {
     let stops: Stop[] = (await fetch('/data/stops.json').then((res) => res.json())) ?? [];

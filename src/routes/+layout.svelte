@@ -1,5 +1,11 @@
-<script>
+<script lang="ts">
+  import Navbar, { Icon } from '$lib/components/Navbar.svelte';
   import '../app.css';
+
+  const menuItems = [
+    { icon: Icon.STOP, link: '/stop/1', name: 'stops' },
+    { icon: Icon.ROUTE, link: '/route/0', name: 'routes' }
+  ];
 </script>
 
 <svelte:head>
@@ -11,5 +17,7 @@
     referrerpolicy="no-referrer"
   />
 </svelte:head>
+
+<Navbar {menuItems} />
 
 <slot />
