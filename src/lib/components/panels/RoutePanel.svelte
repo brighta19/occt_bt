@@ -5,6 +5,8 @@
   const DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
   const DIRECTIONS = ['inbound', 'outbound'];
 
+  const LOCAL_STORAGE_DIRECTION_PROPERTY = 'route_direction';
+
   const currentDay = DAYS[new Date().getDay()];
 
   export let route: Route;
@@ -14,6 +16,15 @@
   let relatedSchedules: Schedule[] = [];
 
   let selectedDirection = 'outbound';
+  {
+    let _direction = localStorage.getItem(LOCAL_STORAGE_DIRECTION_PROPERTY);
+    if (_direction === null) {
+      localStorage.setItem(LOCAL_STORAGE_DIRECTION_PROPERTY, selectedDirection);
+    } else {
+      selectedDirection = _direction;
+    }
+  }
+
   let selectedDay = currentDay;
 
   let currentSchedule: Schedule | undefined;
@@ -129,6 +140,7 @@
 
   function updateDirection(direction: string) {
     selectedDirection = direction;
+    localStorage.setItem(LOCAL_STORAGE_DIRECTION_PROPERTY, selectedDirection);
     update();
   }
 
