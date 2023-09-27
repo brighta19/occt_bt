@@ -14,6 +14,8 @@
   let isLoading = false;
   let timeoutId: NodeJS.Timeout | undefined;
 
+  let currentDate = new Date();
+
   activeMenuItem.set('stops');
 
   async function fetchData() {
@@ -28,6 +30,15 @@
 
   function findStop(stopId: number) {
     return allStops.find((stop) => stop.id === stopId) ?? null;
+  }
+
+  function onVisibilityChange() {
+    const hasBeen10Seconds = new Date().getTime() - currentDate.getTime() > 10000;
+    const isVisible = document.visibilityState === 'visible';
+
+    if (isVisible && hasBeen10Seconds) {
+      window.location.reload();
+    }
   }
 
   onMount(async () => {
@@ -45,6 +56,8 @@
     selectedStop = findStop(selectedStopId);
   }
 </script>
+
+<svelte:window on:visibilitychange={onVisibilityChange} />
 
 {#if selectedStop != null}
   <div class="mx-5 my-5 flex items-center">
