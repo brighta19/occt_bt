@@ -16,15 +16,16 @@
   }[];
 </script>
 
-<nav class="fixed bottom-0 w-full flex bg-white z-10 border-t">
+<nav class="fixed top-0 w-full flex bg-gradient-to-b from-white to-slate-100 z-10 border-b mt-2">
   {#each menuItems as menuItem}
     <a
       href={menuItem.link}
-      class="flex p-2 gap-2 w-full justify-center items-center hover:bg-slate-200 focus:bg-slate-200"
-      class:bg-slate-300={$activeMenuItem === menuItem.name}
+      class="flex p-2 gap-2 w-full justify-center items-center bg-gradient-to-b from-white hover:bg-slate-200 focus:bg-slate-200"
+      class:to-slate-300={$activeMenuItem === menuItem.name}
     >
       {@html menuItem.icon}
       <p class="capitalize">{menuItem.name}</p>
     </a>
   {/each}
 </nav>
+<div class="mb-16" />
