@@ -16,7 +16,7 @@
   }[];
 </script>
 
-<nav class="fixed top-0 w-full flex bg-gradient-to-b from-white to-slate-100 z-10 border-b mt-2">
+<nav class="fixed top-0 w-full flex bg-gradient-to-b from-white to-slate-100 z-10 border-b pt-2">
   {#each menuItems as menuItem}
     <a
       href={menuItem.link}
